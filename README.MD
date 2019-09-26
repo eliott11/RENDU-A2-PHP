@@ -16,3 +16,8 @@
  - rendu.php
  - combat.php
  - personnage.php
+ 
+ 
+#### Envoyer moi le lien de votre project github par mail au mail : **glrd.remi@gmail.com**
+
+#### Dans l'objet du mail ecrivez **RENDU A2 PHP - PRENOM NOM**
