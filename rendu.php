@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . "/vendor/autoload.php";
 
-## ETAPE 0
+## ETAPE 0 
 
 ## CONNECTEZ VOUS A VOTRE BASE DE DONNEE
 
