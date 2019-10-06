@@ -76,23 +76,23 @@ $types = $select_types->fetchAll(PDO::FETCH_OBJ);
 <body>
 <nav class="nav mb-3">
     <a href="./rendu.php" class="nav-link">Acceuil</a>
-    <a href="./personnage.php" class="nav-link">Mes Personnages</a>
+    <a href="./personnage.php" class="nav-link">Mes Champions</a>
     <a href="./combat.php" class="nav-link">Combats</a>
 </nav>
 <h1>Acceuil</h1>
 <div class="w-100 mt-5">
     <form action="personnage.php" method="POST" class="form-group">
         <div class="form-group col-md-4">
-            <label for="">Nom du personnage</label>
+            <label for="">Nom du champion</label>
             <input type="text" class="form-control" placeholder="Nom" name="name">
         </div>
 
         <div class="form-group col-md-4">
-            <label for="">Attaque du personnage</label>
+            <label for="">Attaque du champion</label>
             <input type="text" class="form-control" placeholder="Atk" name="atk">
         </div>
         <div class="form-group col-md-4">
-            <label for="">Pv du personnage</label>
+            <label for="">Pv du champion</label>
             <input type="text" class="form-control" placeholder="Pv" name="pv">
         </div>
         <div class="form-group col-md-4">

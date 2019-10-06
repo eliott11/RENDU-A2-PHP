@@ -50,7 +50,7 @@ $personnages = $select_personnages->fetchAll(PDO::FETCH_OBJ);
 <body>
 <nav class="nav mb-3">
     <a href="./rendu.php" class="nav-link">Acceuil</a>
-    <a href="./personnage.php" class="nav-link">Mes Personnages</a>
+    <a href="./personnage.php" class="nav-link">Mes Champions</a>
     <a href="./combat.php" class="nav-link">Combats</a>
 </nav>
 
@@ -106,7 +106,7 @@ while($pv_perso_1>0 && $pv_perso_2>0 ) {
     $pv_perso_1=$pv_perso_1-$atk_perso_2;
     echo "Le champion " . $personnage_1 . " perd " . $atk_perso_2 . " PV" . "<br>";
     $pv_perso_2= $pv_perso_2-$atk_perso_1;
-    echo "Le champion " . $personnage_2 . " perdu " . $atk_perso_1 . " PV" . "<br>";
+    echo "Le champion " . $personnage_2 . " perd " . $atk_perso_1 . " PV" . "<br>";
     }
     if($pv_perso_1>0 && $pv_perso_2<=0){
         echo "Le champion " . $personnage_1 . " a vaincu le champion " . $personnage_2 . "<br>";
@@ -115,7 +115,7 @@ while($pv_perso_1>0 && $pv_perso_2>0 ) {
         echo "Le champion " . $personnage_2 . " a vaincu le champion " . $personnage_1 . "<br>";
     }
     elseif($pv_perso_2<=0 && $pv_perso_1<=0){
-        echo "Le champion " . $personnage_1 . " et le champion " . $personnage_2 . " sont éliminés" . "<br>";
+        echo "Le champion " . $personnage_1 . " et le champion " . $personnage_2 . " sont éliminés " . "<br>";
     }
 }
 

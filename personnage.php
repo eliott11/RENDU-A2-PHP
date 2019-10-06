@@ -49,7 +49,7 @@ $personnages = $select_personnages->fetchAll(PDO::FETCH_ASSOC);
 <body>
 <nav class="nav mb-3">
     <a href="./rendu.php" class="nav-link">Acceuil</a>
-    <a href="./personnage.php" class="nav-link">Mes Personnages</a>
+    <a href="./personnage.php" class="nav-link">Mes Champions</a>
     <a href="./combat.php" class="nav-link">Combats</a>
 </nav>
 <h1>Mes personnages</h1>
