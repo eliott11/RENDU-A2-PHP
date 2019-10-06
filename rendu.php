@@ -4,6 +4,7 @@ require __DIR__ . "/vendor/autoload.php";
 ## ETAPE 0 
 
 ## CONNECTEZ VOUS A VOTRE BASE DE DONNEE
+$pdo = new PDO('mysql:host=127.0.0.1;dbname=rendu_php', "root", "");
 
 ### ETAPE 1
 
@@ -42,7 +43,7 @@ require __DIR__ . "/vendor/autoload.php";
 #######################
 ## ETAPE 4
 
-# ENREGISTRER EN BASE DE DONNEE LE PERSONNAGE, AVEC LE BON TYPE ASSOCIER
+# ENREGISTRER EN BASE DE DONNEE LE PERSONNAGE, AVEC LE BON TYPE ASSOCIE
 
 #######################
 ## ETAPE 5
@@ -55,6 +56,11 @@ require __DIR__ . "/vendor/autoload.php";
 
 ?>
 
+<?php
+$select_types = $pdo->prepare('SELECT * FROM types');
+$select_types->execute();
+$types = $select_types->fetchAll(PDO::FETCH_OBJ);
+?>
 
 <!doctype html>
 <html lang="en">
@@ -75,28 +81,46 @@ require __DIR__ . "/vendor/autoload.php";
 </nav>
 <h1>Acceuil</h1>
 <div class="w-100 mt-5">
-    <form action="" method="POST" class="form-group">
+    <form action="personnage.php" method="POST" class="form-group">
         <div class="form-group col-md-4">
             <label for="">Nom du personnage</label>
-            <input type="text" class="form-control" placeholder="Nom">
+            <input type="text" class="form-control" placeholder="Nom" name="name">
         </div>
 
         <div class="form-group col-md-4">
             <label for="">Attaque du personnage</label>
-            <input type="text" class="form-control" placeholder="Atk">
+            <input type="text" class="form-control" placeholder="Atk" name="atk">
         </div>
         <div class="form-group col-md-4">
             <label for="">Pv du personnage</label>
-            <input type="text" class="form-control" placeholder="Pv">
+            <input type="text" class="form-control" placeholder="Pv" name="pv">
         </div>
         <div class="form-group col-md-4">
             <label for="">Type</label>
             <select name="" id="">
-                <option value="" selected disabled>Choissisez un type</option>
+                <option value="feu" selected>Choissisez un type feu</option>
+                <option value="eau">Choissisez un type eau</option>
             </select>
+
         </div>
         <button class="btn btn-primary">Enregistrer</button>
     </form>
+
+    <?php
+    if(!empty($_POST)){
+        $nom = $_POST["name"];
+        $atk = $_POST["atk"];
+        $pv = $_POST["pv"];
+        $types = $_POST["types"];
+
+        $new_perso = $pdo->prepare('INSERT INTO personnages (name, atk, pv, id) VALUES ("'.$nom.'",'.$atk.','.$pv.','.$types.')');
+
+        if ($new_perso->execute()) {
+            echo "Le champion " . $nom . " a été créé";
+        }
+    }
+    ?>
+
 </div>
 
 </body>

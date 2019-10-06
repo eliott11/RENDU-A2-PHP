@@ -4,7 +4,7 @@ require __DIR__ . "/vendor/autoload.php";
 ## ETAPE 0
 
 ## CONNECTEZ VOUS A VOTRE BASE DE DONNEE
-
+$pdo = new PDO('mysql:host=127.0.0.1;dbname=rendu_php', "root", "");
 ## ETAPE 1
 
 ## POUVOIR SELECTIONER UN PERSONNE DANS LE PREMIER SELECTEUR
@@ -30,6 +30,11 @@ require __DIR__ . "/vendor/autoload.php";
 
 ?>
 
+<?php
+$select_personnages = $pdo->prepare('SELECT * FROM personnages WHERE pv>10');
+$select_personnages->execute();
+$personnages = $select_personnages->fetchAll(PDO::FETCH_OBJ);
+?>
 
 <!doctype html>
 <html lang="en">
@@ -48,21 +53,75 @@ require __DIR__ . "/vendor/autoload.php";
     <a href="./personnage.php" class="nav-link">Mes Personnages</a>
     <a href="./combat.php" class="nav-link">Combats</a>
 </nav>
+
 <h1>Combats</h1>
 <div class="w-100 mt-5">
 
-    <form action="">
+    <form method="POST">
         <div class="form-group">
-            <select name="" id=""></select>
+            <select name="personnage_1" id="personnage_1">
+            <option value="" selected disabled >Sélection du champion :</option>
+
+                <?php foreach($personnages as $key => $value): ?>
+                    <option value="<?php echo $value->name?>"><?php echo $value->name?></option>
+                <?php endforeach; ?>
+
+            </select>
         </div>
         <div class="form-group">
-            <select name="" id=""></select>
+            <select name="personnage_2" id="personnage_2">
+            <option value="" selected disabled >Choisissez un adversaire</option>
+
+                <?php foreach($personnages as $key => $value): ?>
+                    <option value="<?php echo $value->name?>"><?php echo $value->name?></option>
+                <?php endforeach; ?>
+
+            </select>
         </div>
 
         <button class="btn">Fight</button>
+        <br>
+        <br>
     </form>
 
 </div>
+
+<?php
+if (!empty($_POST["personnage_1"])&&!empty($_POST["personnage_2"])) {
+
+$personnage_1 = $_POST["personnage_1"];
+$personnage_2 = $_POST["personnage_2"];
+
+$select_persos_form = $pdo->prepare('SELECT * FROM personnages WHERE name IN("'.$personnage_1.'","'.$personnage_2.'")');
+$select_persos_form->execute();
+$combattants = $select_persos_form->fetchAll(PDO::FETCH_OBJ);
+
+$atk_perso_1 = $combattants[0]->atk;
+$atk_perso_2 = $combattants[1]->atk;
+
+$pv_perso_1 = $combattants[0]->pv;
+$pv_perso_2 = $combattants[1]->pv;
+
+while($pv_perso_1>0 && $pv_perso_2>0 ) {
+    $pv_perso_1=$pv_perso_1-$atk_perso_2;
+    echo "Le champion " . $personnage_1 . " perd " . $atk_perso_2 . " PV" . "<br>";
+    $pv_perso_2= $pv_perso_2-$atk_perso_1;
+    echo "Le champion " . $personnage_2 . " perdu " . $atk_perso_1 . " PV" . "<br>";
+    }
+    if($pv_perso_1>0 && $pv_perso_2<=0){
+        echo "Le champion " . $personnage_1 . " a vaincu le champion " . $personnage_2 . "<br>";
+    }
+    elseif($pv_perso_2>0 && $pv_perso_1<=0){
+        echo "Le champion " . $personnage_2 . " a vaincu le champion " . $personnage_1 . "<br>";
+    }
+    elseif($pv_perso_2<=0 && $pv_perso_1<=0){
+        echo "Le champion " . $personnage_1 . " et le champion " . $personnage_2 . " sont éliminés" . "<br>";
+    }
+}
+
+
+
+?>
 
 </body>
 </html>
